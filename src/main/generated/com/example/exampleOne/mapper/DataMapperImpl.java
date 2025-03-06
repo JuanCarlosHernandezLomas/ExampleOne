@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-04T23:08:42-0600",
+    date = "2025-03-06T00:55:45-0600",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 21.0.6 (Oracle Corporation)"
 )
 public class DataMapperImpl implements DataMapper {
@@ -17,15 +17,11 @@ public class DataMapperImpl implements DataMapper {
             return null;
         }
 
-        Long id = null;
-        String name = null;
-        int edad = 0;
+        DataBo dataBo = new DataBo();
 
-        id = entity.getId();
-        name = entity.getName();
-        edad = entity.getEdad();
-
-        DataBo dataBo = new DataBo( id, name, edad );
+        dataBo.setId( entity.getId() );
+        dataBo.setName( entity.getName() );
+        dataBo.setEdad( entity.getEdad() );
 
         return dataBo;
     }
@@ -36,15 +32,11 @@ public class DataMapperImpl implements DataMapper {
             return null;
         }
 
-        Long id = null;
-        String name = null;
-        int edad = 0;
+        DataEntity dataEntity = new DataEntity();
 
-        id = bo.getId();
-        name = bo.getName();
-        edad = bo.getEdad();
-
-        DataEntity dataEntity = new DataEntity( id, name, edad );
+        dataEntity.setId( bo.getId() );
+        dataEntity.setName( bo.getName() );
+        dataEntity.setEdad( bo.getEdad() );
 
         return dataEntity;
     }

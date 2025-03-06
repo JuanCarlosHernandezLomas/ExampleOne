@@ -18,40 +18,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Validated
-public class DataService {
+public interface DataService {
+DataBo saveData(DataBo dataBo);
+ResponseEntity<DataBo> getData(Long id);
+List<DataBo>getAllData();
 
-    private static final Logger logger = LoggerFactory.getLogger(DataService.class);
-    private final DataRepository dataRepository;
-
-    public DataService(DataRepository dataRepository) {
-        this.dataRepository = dataRepository;
-    }
-
-    public DataBo saveData(@Validated DataBo dataBO) {
-        logger.debug("Converting DataBo to DataEntity: {}", dataBO);
-        DataEntity entity = DataMapper.INSTANCE.boToEntity(dataBO);
-        DataEntity savedEntity = dataRepository.save(entity);
-        logger.info("DataEntity saved in DB: {}", savedEntity);
-        return DataMapper.INSTANCE.entityToBo(savedEntity);
-    }
-
-    public ResponseEntity<DataBo> getData(Long id) {
-        logger.debug("Searching for DataEntity with ID: {}", id);
-        DataEntity entity = dataRepository.findById(id)
-                .orElseThrow(() -> {
-                    logger.error("Resource with ID {} not found", id);
-                    return new ResourceNotFoundException("The resource with ID " + id + " was not found");
-                });
-        logger.info("Successfully retrieved DataEntity: {}", entity);
-        return ResponseEntity.ok(DataMapper.INSTANCE.entityToBo(entity));
-
-    }
-    public List<DataBo> getAllData() {
-        List<DataEntity> dataEntities = dataRepository.findAll();
-        return dataEntities.stream().map(dataEO -> new DataBo(
-                dataEO.getId(),
-                dataEO.getName(),
-                dataEO.getEdad()
-        )).collect(Collectors.toList());
-}
 }
